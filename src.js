@@ -1,3 +1,4 @@
+
 /*
   MinTIC - MinT
   Desarrollo de Software - Sprint # 2
@@ -17,7 +18,29 @@
 */
 // Premisa: Se asume que los 8 parámetros son númericos
 //
-const calcularPocentajes = (limiteCO, limiteCO2, limiteHC, limiteO2, valorCO, valorCO2, valorHC, valorO2) => {
+
+// async function traerDatos(){
+    
+//     let arreglo = await fetch('https://misiontic2022upb.vercel.app/api/emission-measurement/limits')
+//     .then((res) => res.json())
+//     .then((data) => Object.values(data));
+//     console.log(arreglo[0]);
+
+// }
+
+// traerDatos()
+
+const calcularPocentajes = async (valorCO, valorCO2, valorHC, valorO2) => {
+
+    let arreglo = await fetch('https://misiontic2022upb.vercel.app/api/emission-measurement/limits')
+    .then((res) => res.json())
+    .then((data) => Object.values(data));
+
+    let limiteCO = arreglo[0]; 
+    let limiteCO2 = arreglo[1];
+    let limiteHC = arreglo[2]; 
+    let limiteO2 = arreglo[3]; 
+
     // Calcula porcentaje CO
     let porcentajeCO = 0;
     if (limiteCO !== 0) {
@@ -43,13 +66,19 @@ const calcularPocentajes = (limiteCO, limiteCO2, limiteHC, limiteO2, valorCO, va
     }
 
     respuesta = {
+
         "porcentajeCO": parseInt(porcentajeCO.toFixed(2)),
         "porcentajeCO2": parseInt(porcentajeCO2.toFixed(2)),
         "porcentajeHC": parseInt(porcentajeHC.toFixed(2)),
         "porcentajeO2": parseInt(porcentajeO2.toFixed(2))
     }
+    // console.log(respuesta);
     return respuesta;
 };
+
+// calcularPocentajes(4,5,3,4)
+
+
 
 /*   Historia de Usuario: HU-04
         Níveles de parámetros NTC-4983s - Funciones: registrarCO, registrarCO2, registrarHC, registrarO2
